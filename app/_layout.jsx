@@ -2,8 +2,8 @@ import { Stack } from "expo-router";
 import { createContext, useContext, useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 
-const AuthContxt = createContext();
-export const useAuth = () => useContext(AuthContxt);
+const AuthContext = createContext();
+export const useAuth = () => useContext(AuthContext);
 export default function RootLayout() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -27,15 +27,20 @@ export default function RootLayout() {
     );
   }
   return (
-    <AuthContxt.Provider value={{ user, setUser }}>
-      <Stack screenOptions={{ headerShown: false, contentStyle: {backgroundColor: '#111111'} }}>
-        {user === null ? (
-          <Stack.Screen name="(auth)" />
-        ) : (
-       
-          <Stack.Screen name="(tabs)" />
-        )}
-      </Stack>
-    </AuthContxt.Provider>
+  <AuthContext.Provider value={{ user, setUser }}>
+  <Stack
+    screenOptions={{
+      headerShown: false,
+      contentStyle: { backgroundColor: "#111111" },
+    }}
+  >
+    {user === null ? (
+      <Stack.Screen name="(auth)" />
+    ) : (
+      <Stack.Screen name="(tabs)" />
+    )}
+  </Stack>
+</AuthContext.Provider>
+
   );
 }
