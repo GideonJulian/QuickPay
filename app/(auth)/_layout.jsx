@@ -1,5 +1,5 @@
 import { Stack, Tabs } from "expo-router";
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+
 
 export default function AuthLayout() {
   return (

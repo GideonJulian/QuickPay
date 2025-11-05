@@ -12,10 +12,12 @@ import {
 } from "react-native";
 import GoogleIcon from "../../components/icon/GoogleIcon";
 import { useAuth } from "../../context/AuthContext";
+import { useRouter } from "expo-router";
 export default function AuthScreen() {
   const [activeTab, setActiveTab] = useState("login");
   const [showPassword, setShowPassword] = useState(false);
-  const { setUser, user } = useAuth()
+  const { setUser, user } = useAuth();
+  const router = useRouter();
 
   // Fade animation setup
   const fadeAnim = useRef(new Animated.Value(1)).current;
@@ -122,9 +124,9 @@ export default function AuthScreen() {
             <TouchableOpacity
               style={styles.mainButton}
               onPress={() => {
-            
-               console.log("User logged in", user);
-                setUser(true);
+                setUser({ name: "Demo User" });
+                
+                router.replace("/(tabs)");
               }}
             >
               <Text style={styles.mainButtonText}>
