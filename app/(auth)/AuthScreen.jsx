@@ -1,21 +1,22 @@
-import React, { useState, useRef, useEffect, use } from "react";
+import { useRef, useState } from "react";
 import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
   Animated,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import GoogleIcon from "../../components/icon/GoogleIcon";
-import { useAuth } from "../../app/_layout";
+import { useAuth } from "../../context/AuthContext";
 export default function AuthScreen() {
   const [activeTab, setActiveTab] = useState("login");
   const [showPassword, setShowPassword] = useState(false);
-  const { setUser } = useAuth();
+  const { setUser, user } = useAuth()
+
   // Fade animation setup
   const fadeAnim = useRef(new Animated.Value(1)).current;
 
@@ -121,8 +122,9 @@ export default function AuthScreen() {
             <TouchableOpacity
               style={styles.mainButton}
               onPress={() => {
-                // Simulate authentication or demo login
-                setUser({ name: "Demo User", email: "demo@example.com" });
+            
+               console.log("User logged in", user);
+                setUser(true);
               }}
             >
               <Text style={styles.mainButtonText}>
