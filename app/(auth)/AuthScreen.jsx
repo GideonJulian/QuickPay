@@ -73,14 +73,14 @@ export default function AuthScreen() {
             placeholder="Enter your password"
             placeholderTextColor="#888"
           />
-          <Pressable
+          {/* <Pressable
             onPress={() => setShowPassword(!showPassword)}
             style={styles.eyeIcon}
           >
             <Text style={{ color: "#888" }}>
               {showPassword ? "🙈" : "👁️"}
             </Text>
-          </Pressable>
+          </Pressable> */}
         </View>
 
         {activeTab === "login" && (
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   },
   tab: {
     flex: 1,
-    paddingVertical: 12,
+    paddingVertical: 10,
     alignItems: "center",
     borderRadius: 10,
   },
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   eyeIcon: {
-    padding: 12,
+    paddingHorizontal: 12,
   },
   forgotBtn: {
     alignSelf: "flex-end",
@@ -231,6 +231,9 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     alignItems: "center",
     marginBottom: 20,
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 10,
   },
   googleText: {
     color: "#fff",
