@@ -18,6 +18,10 @@ export default function AuthScreen() {
   const [showPassword, setShowPassword] = useState(false);
   const { setUser, user } = useAuth();
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   // Fade animation setup
   const fadeAnim = useRef(new Animated.Value(1)).current;
@@ -125,7 +129,7 @@ export default function AuthScreen() {
               style={styles.mainButton}
               onPress={() => {
                 setUser({ name: "Demo User" });
-                
+
                 router.replace("/(tabs)");
               }}
             >
