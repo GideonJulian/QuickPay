@@ -13,16 +13,20 @@ import {
 import GoogleIcon from "../../components/icon/GoogleIcon";
 import { useAuth } from "../../context/AuthContext";
 import { useRouter } from "expo-router";
+import CustomPopup from "../../components/CustomPopup";
 export default function AuthScreen() {
   const [activeTab, setActiveTab] = useState("login");
   const [showPassword, setShowPassword] = useState(false);
-  const { setUser, user } = useAuth();
+
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
+  const { setUser, user, registerNewUser, loginUser } = useAuth();
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
   // Fade animation setup
   const fadeAnim = useRef(new Animated.Value(1)).current;
 
@@ -43,6 +47,33 @@ export default function AuthScreen() {
     ]).start(() => setActiveTab(tab));
   };
 
+  const handleAuth = async () => {
+    setLoading(true);
+    setError(false);
+    if (activeTab === "signup") {
+      if (!email || !password) {
+        setPopupMessage(
+          "Invalid credentials. Please check your email or password."
+        );
+          setPopupVisible(true);  
+        setLoading(false);
+        return;
+      }
+
+      const newUser = { name: "Demo user", email, password };
+      await registerNewUser(newUser);
+      router.replace("/(tabs)");
+    } else {
+      const result = await loginUser(email, password);
+      if (result.success) {
+        router.replace("/(tabs)");
+      } else {
+        setPopupMessage(result.message);
+          setPopupVisible(true)
+      }
+    }
+    setLoading(false);
+  };
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -98,6 +129,8 @@ export default function AuthScreen() {
                   style={styles.input}
                   placeholder="Enter your full name"
                   placeholderTextColor="#888"
+                  value={name}
+                  onChangeText={setName}
                 />
               </>
             )}
@@ -107,6 +140,8 @@ export default function AuthScreen() {
               style={styles.input}
               placeholder="Enter your email or phone"
               placeholderTextColor="#888"
+              value={email}
+              onChangeText={setEmail}
             />
 
             <Text style={styles.label}>Password</Text>
@@ -116,6 +151,8 @@ export default function AuthScreen() {
                 secureTextEntry={!showPassword}
                 placeholder="Enter your password"
                 placeholderTextColor="#888"
+                value={password}
+                onChangeText={setPassword}
               />
             </View>
 
@@ -125,18 +162,17 @@ export default function AuthScreen() {
               </TouchableOpacity>
             )}
 
-            <TouchableOpacity
-              style={styles.mainButton}
-              onPress={() => {
-                setUser({ name: "Demo User" });
-
-                router.replace("/(tabs)");
-              }}
-            >
+            <TouchableOpacity style={styles.mainButton} onPress={handleAuth}>
               <Text style={styles.mainButtonText}>
                 {activeTab === "login" ? "Log In" : "Create Account"}
               </Text>
             </TouchableOpacity>
+            <Text
+              style={{ color: "red", textAlign: "center", marginBottom: 10 }}
+            >
+              {" "}
+              {error}
+            </Text>
 
             <View style={styles.divider}>
               <View style={styles.line} />
@@ -156,6 +192,11 @@ export default function AuthScreen() {
             </Text>
           </Animated.View>
         </View>
+        <CustomPopup
+          visible={popupVisible}
+          message={popupMessage}
+          onClose={() => setPopupVisible(false)}
+        />
       </ScrollView>
     </KeyboardAvoidingView>
   );

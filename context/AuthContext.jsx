@@ -7,7 +7,7 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadUser = async () => {
@@ -17,9 +17,9 @@ export const AuthProvider = ({ children }) => {
           setUser(JSON.parse(storedUser));
         }
       } catch (err) {
-        throw err;
+        console.error("Error loading user:", err);
       } finally {
-        setIsLoading(false);
+        setLoading(false);
       }
     };
     loadUser();
@@ -27,31 +27,42 @@ export const AuthProvider = ({ children }) => {
 
   const registerNewUser = async (userData) => {
     try {
+      const existingUser = await AsyncStorage.getItem("user");
+      if (existingUser) {
+        return { success: false, message: "User already exists" };
+      }
       await AsyncStorage.setItem("user", JSON.stringify(userData));
       setUser(userData);
+      return { success: true, message: "Registration successful" };
     } catch (err) {
-      throw err;
+      console.error("Register error:", err);
+      return { success: false, message: "Error registering user" };
     }
   };
 
   const loginUser = async (email, password) => {
     try {
       const storedUser = await AsyncStorage.getItem("user");
-      if (!storedUser) return { success: false, message: "User Not Found " };
+      if (!storedUser) return { success: false, message: "User not found" };
 
       const parsed = JSON.parse(storedUser);
       if (parsed.email === email && parsed.password === password) {
         setUser(parsed);
-        return { success: true, message: "Login Successful" };
+        return { success: true, message: "Login successful" };
       } else {
-        return { success: false, message: "Invalid Credentials" };
+        return { success: false, message: "Invalid credentials" };
       }
-    } catch {}
+    } catch (err) {
+      console.error("Login error:", err);
+      return { success: false, message: "Something went wrong" };
+    }
   };
+
   const logoutUser = async () => {
     await AsyncStorage.removeItem("user");
     setUser(null);
   };
+
   return (
     <AuthContext.Provider
       value={{ user, setUser, logoutUser, loginUser, registerNewUser, loading }}
