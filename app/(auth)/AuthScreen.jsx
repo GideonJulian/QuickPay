@@ -55,7 +55,7 @@ export default function AuthScreen() {
         setPopupMessage(
           "Invalid credentials. Please check your email or password."
         );
-          setPopupVisible(true);  
+        setPopupVisible(true);
         setLoading(false);
         return;
       }
@@ -69,7 +69,7 @@ export default function AuthScreen() {
         router.replace("/(tabs)");
       } else {
         setPopupMessage(result.message);
-          setPopupVisible(true)
+        setPopupVisible(true);
       }
     }
     setLoading(false);
