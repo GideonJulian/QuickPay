@@ -60,7 +60,7 @@ export default function AuthScreen() {
         return;
       }
 
-      const newUser = { name: "Demo user", email, password };
+      const newUser = { name, email, password };
       await registerNewUser(newUser);
       router.replace("/(tabs)");
     } else {
@@ -112,8 +112,7 @@ export default function AuthScreen() {
               <Text
                 style={[
                   styles.tabText,
-                  activeTab === "signup" && styles.activeTabText,
-                ]}
+                  activeTab === "signup" && styles.activeTabText,]}
               >
                 Signup
               </Text>

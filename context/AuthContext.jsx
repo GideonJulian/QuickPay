@@ -8,8 +8,8 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
+   
     const loadUser = async () => {
       try {
         const storedUser = await AsyncStorage.getItem("user");
@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
       } catch (err) {
         console.error("Error loading user:", err);
       } finally {
-        setLoading(false);
+        setLoading(false); // important!
       }
     };
     loadUser();
@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }) => {
       if (!storedUser) return { success: false, message: "User not found" };
 
       const parsed = JSON.parse(storedUser);
-      if (parsed.email === email && parsed.password === password) {
+      if (parsed.email === email && parsed.password === password) {   
         setUser(parsed);
         return { success: true, message: "Login successful" };
       } else {
