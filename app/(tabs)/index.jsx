@@ -12,7 +12,7 @@ const index = () => {
     setEyeShow(!eyeShow);
   };
   return (
-    <View style={{ backgroundColor: "#111111", flex: 1, paddingVertical: 45 }}>
+    <View style={{ backgroundColor: "#111111", flex: 1, paddingVertical: 45, height: '100%' }}>
       <View
         style={{
           flexDirection: "row",
@@ -47,8 +47,8 @@ const index = () => {
       <View style={styles.balanceContainer}>
         <Text style={{ color: "#a0a0a0" }}>Your Balance</Text>
         <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
-          <Text style={{ color: "white", fontWeight: "bold", fontSize: 32 }}>
-            $1,243.52
+        <Text style={{ color: "white", fontWeight: "bold", fontSize: 32 }}>
+            {eyeShow ? "$1,243.52" : "********"}
           </Text>
 
           <TouchableOpacity onPress={handleHideShow}>
@@ -69,5 +69,6 @@ const styles = StyleSheet.create({
   balanceContainer: {
     justifyContent: "center",
     alignItems: "center",
+    paddingTop: 30,
   },
 });
