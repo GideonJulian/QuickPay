@@ -2,17 +2,10 @@ import { View, Text, Pressable } from "react-native";
 import React from "react";
 import { Link } from "expo-router";
 import HistoryItem from "./HistoryItem";
-
+import historyData from "../utils/HomeHistoyData";
+import { Ionicons, MaterialCommunityIcons, Feather } from "@expo/vector-icons"; 
 const HomeHistory = () => {
-  const historyData = [
-    {
-      id: 1,
-      icon: "💸",
-      title: "Sent to John",
-      price: "-$50.00",
-      date: "2024-06-10",
-    },
-  ];
+
   return (
     <View>
       <View
@@ -34,9 +27,17 @@ const HomeHistory = () => {
         </Pressable>
       </View>
       <View style={{ marginTop: 10, gap: 10 }}>
-        {historyData.map((item) => (
-        <HistoryItem />
-        ))}
+        {historyData.map((item) => {
+          let IconComponent;
+          if (item.iconType === "Ionicons") IconComponent = Ionicons;
+          else if (item.iconType === "Feather") IconComponent = Feather;
+          else if (item.iconType === "MaterialCommunityIcons")
+            IconComponent = MaterialCommunityIcons;
+
+          return (
+             <HistoryItem key={item.id} {...item} />
+          );
+        })}
       </View>
     </View>
   );
