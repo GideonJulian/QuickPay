@@ -13,7 +13,6 @@ const Index = () => {
 
   const handleHideShow = () => setEyeShow(!eyeShow);
 
-  // ✅ Include `iconType` for each feature
   const features = [
     {
       icon: "credit-card-plus-outline",
@@ -64,10 +63,12 @@ const Index = () => {
             icon={item.icon}
             iconType={item.iconType}
             label={item.label}
+            onPress={() => console.log(`${item.label} pressed`)} // temporary
           />
         ))}
       </View>
-      <View style={{padding: 10}}>
+
+      <View style={{ padding: 10 }}>
         <HomeHistory />
       </View>
     </View>
@@ -76,8 +77,8 @@ const Index = () => {
 
 export default Index;
 
-// ✅ GreyBox Component that chooses correct icon source dynamically
-const GreyBox = ({ icon, iconType, label }) => {
+// ✅ Clickable GreyBox Component
+const GreyBox = ({ icon, iconType, label, onPress }) => {
   const renderIcon = () => {
     switch (iconType) {
       case "MaterialCommunityIcons":
@@ -91,10 +92,10 @@ const GreyBox = ({ icon, iconType, label }) => {
   };
 
   return (
-    <View style={styles.greyBox}>
+    <TouchableOpacity activeOpacity={0.8} style={styles.greyBox} onPress={onPress}>
       <View style={styles.iconBg}>{renderIcon()}</View>
       <Text style={styles.greyBoxText}>{label}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
