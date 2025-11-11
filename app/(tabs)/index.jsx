@@ -5,6 +5,7 @@ import userImage from "../../assets/images/user.png";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import HomeHistory from "../../components/HomeHistory";
 
 const Index = () => {
   const { user } = useAuth();
@@ -66,6 +67,9 @@ const Index = () => {
           />
         ))}
       </View>
+      <View style={{padding: 10}}>
+        <HomeHistory />
+      </View>
     </View>
   );
 };
@@ -89,7 +93,6 @@ const GreyBox = ({ icon, iconType, label }) => {
   return (
     <View style={styles.greyBox}>
       <View style={styles.iconBg}>{renderIcon()}</View>
-
       <Text style={styles.greyBoxText}>{label}</Text>
     </View>
   );
