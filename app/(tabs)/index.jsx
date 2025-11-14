@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import userImage from "../../assets/images/user.png";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import HomeHistory from "../../components/HomeHistory";
 
@@ -33,9 +34,8 @@ const Index = () => {
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.title}>QuickPay</Text>
-        <View style={styles.profileContainer}>
-          <Image source={userImage} style={styles.profileImage} />
-        </View>
+
+        <AntDesign name="bell" size={24} color="white" />
       </View>
 
       {/* Balance */}
@@ -92,7 +92,11 @@ const GreyBox = ({ icon, iconType, label, onPress }) => {
   };
 
   return (
-    <TouchableOpacity activeOpacity={0.8} style={styles.greyBox} onPress={onPress}>
+    <TouchableOpacity
+      activeOpacity={0.8}
+      style={styles.greyBox}
+      onPress={onPress}
+    >
       <View style={styles.iconBg}>{renderIcon()}</View>
       <Text style={styles.greyBoxText}>{label}</Text>
     </TouchableOpacity>
