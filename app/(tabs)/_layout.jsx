@@ -20,6 +20,7 @@ export default function Layout() {
       }}
     >
       <Tabs.Screen
+    
         name="index"
         options={{
           title: "Home",

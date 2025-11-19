@@ -7,26 +7,30 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import HomeHistory from "../../components/HomeHistory";
-
+import { useRouter } from "expo-router";
 const Index = () => {
   const { user } = useAuth();
   const [eyeShow, setEyeShow] = useState(true);
 
   const handleHideShow = () => setEyeShow(!eyeShow);
 
+  const router = useRouter();
+
   const features = [
     {
       icon: "credit-card-plus-outline",
       iconType: "MaterialCommunityIcons",
       label: "Fund Wallet",
+      route: "/fund-wallet",
     },
     {
       icon: "phone-portrait-outline",
       iconType: "Ionicons",
       label: "Buy Airtime",
+      route: "",
     },
-    { icon: "credit-card", iconType: "Feather", label: "Pay Bills" },
-    { icon: "zap", iconType: "Feather", label: "Send Money" },
+    { icon: "credit-card", iconType: "Feather", label: "Pay Bills", route: "" },
+    { icon: "zap", iconType: "Feather", label: "Send Money", route: "/send-money" },
   ];
 
   return (
@@ -63,7 +67,10 @@ const Index = () => {
             icon={item.icon}
             iconType={item.iconType}
             label={item.label}
-            onPress={() => console.log(`${item.label} pressed`)} // temporary
+            onPress={() => {
+              router.push(item.route)
+              console.log(item.route)
+            }}
           />
         ))}
       </View>
