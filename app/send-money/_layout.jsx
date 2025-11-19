@@ -16,6 +16,7 @@ export default function Layout() {
           headerTitle: "Send Money",
           headerBackVisible: true,
           headerBackTitleVisible: false,
+             headerTintColor: "white",
           headerBackImage: () => (
             <Ionicons name="chevron-back" size={26} color="white" />
           ),

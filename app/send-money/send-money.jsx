@@ -3,7 +3,7 @@ import React from 'react'
 
 const index = () => {
   return (
-    <View >  
+    <View style={{ backgroundColor: "#111111", flex: 1, paddingVertical: 45 }}>  
       <Text>Send Money</Text>
     </View>
   )
